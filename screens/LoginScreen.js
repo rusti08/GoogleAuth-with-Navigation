@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Button, StyleSheet, Text } from 'react-native';
+import { View, Button, StyleSheet, Text, ActivityIndicator  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Google from 'expo-auth-session/providers/google';
 
@@ -30,6 +30,15 @@ export default function LoginScreen({ navigation }) {
     promptAsync();
   };
 
+  if (isLoading) {
+    // Show a loading indicator while loading
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Button title="Sign in with Google" disabled={!request} onPress={handleLogin} />
@@ -44,6 +53,11 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
